@@ -30,6 +30,12 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
 .wrap{max-width:960px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 
+
+.reco-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+/* CANVAS PARTICLES */
+#particles-canvas{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.35;
+}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,12,20,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);padding:12px 0}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -88,6 +94,10 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(5,12,20,0.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px}
 .modal-overlay.active{display:flex}
+@media(max-width:480px){
+  #cvModal{align-items:flex-end;padding:0}
+  #cvModal .modal-box{border-radius:12px 12px 0 0;width:100%;max-width:100%}
+}
 .modal-box{background:var(--bg2);border:1px solid var(--green);border-radius:4px;padding:32px 36px;max-width:480px;width:100%;position:relative;box-shadow:0 0 50px rgba(0,255,136,0.12);animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
 .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;transition:color .2s}
@@ -154,9 +164,9 @@ section{padding:80px 0}
 
 /* FORMATIONS */
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.form-card{background:var(--bg2);border:1px solid var(--border);padding:20px 18px;border-radius:2px;border-top:2px solid #8b0000;transition:transform .2s}
+.form-card{background:var(--bg2);border:1px solid var(--border);padding:20px 18px;border-radius:2px;border-top:2px solid var(--amber);transition:transform .2s}
 .form-card:hover{transform:translateY(-3px)}
-.form-year{font-family:'Share Tech Mono',monospace;font-size:10px;color:#cc2222;letter-spacing:2px;margin-bottom:7px}
+.form-year{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:2px;margin-bottom:7px}
 .form-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
 .form-school{font-size:12px;color:var(--text2)}
 
@@ -192,18 +202,194 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 .footer-text{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px}
 .footer-text span{color:var(--green)}
 
+/* TYPING CURSOR */
+.cursor-blink{animation:blink .7s infinite;color:var(--green);font-size:14px}@media(max-width:480px){.hero-sub{font-size:11px;letter-spacing:1px}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 /* BACK TO TOP */
 #btt{
-  position:fixed;bottom:24px;right:24px;z-index:200;
-  width:44px;height:44px;border-radius:50%;
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  width:52px;height:52px;border-radius:50%;
   background:var(--green);color:#050c14;
-  border:none;cursor:pointer;font-size:20px;
+  border:2px solid rgba(255,255,255,0.2);
+  cursor:pointer;font-size:22px;font-weight:900;
   display:none;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(0,255,136,0.3);
-  transition:all .2s;
+  box-shadow:0 0 20px rgba(0,255,136,0.5),0 4px 24px rgba(0,0,0,0.4);
+  transition:all .25s;
+  animation:pulse-btt 2s infinite;
 }
-#btt:hover{background:var(--green2);transform:translateY(-3px)}
+@keyframes pulse-btt{
+  0%,100%{box-shadow:0 0 20px rgba(0,255,136,0.5),0 4px 24px rgba(0,0,0,0.4)}
+  50%{box-shadow:0 0 35px rgba(0,255,136,0.8),0 4px 24px rgba(0,0,0,0.4)}
+}
+#btt:hover{background:var(--green2);transform:translateY(-4px) scale(1.1)}
 #btt.visible{display:flex}
+
+/* ═══════════════════════════════
+   MOBILE & TABLET RESPONSIVE
+   ═══════════════════════════════ */
+button, .btn-p, .btn-o, .btn-cv, #btt {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* TABLET 768px */
+@media(max-width:768px){
+  .wrap{padding:0 16px}
+  section{padding:60px 0}
+  .sec-title{font-size:26px}
+  .hero{padding-top:70px}
+  .hero-stats{gap:24px}
+  .stat-num{font-size:26px}
+  .projet-card{grid-template-columns:1fr}
+  .deux-cols{grid-template-columns:1fr !important;gap:32px}
+  .skills-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .form-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr 1fr}
+  .pdf-modal-box{width:98%;height:85vh}
+}
+
+/* MOBILE 480px */
+@media(max-width:480px){
+  .wrap{padding:0 14px}
+  section{padding:48px 0}
+  .sec-title{font-size:22px}
+  .sec-tag{font-size:10px}
+
+  /* NAV */
+  .nav-logo{font-size:11px}
+
+  /* HERO */
+  .hero{min-height:auto;padding:80px 0 48px}
+  .hero-inner{grid-template-columns:1fr;gap:24px}
+  .hero h1{font-size:clamp(34px,10vw,52px)}
+  .hero-tag{font-size:10px;padding:4px 10px}
+  .hero-sub{font-size:12px}
+  .hero-desc{font-size:14px;margin-bottom:24px}
+
+  /* BUTTONS — full width stacked */
+  .hero-btns{flex-direction:column;gap:10px;width:100%}
+  .btn-p,.btn-o{
+    padding:15px 20px;font-size:14px;
+    min-height:50px;width:100%;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:3px;
+  }
+
+  /* STATS */
+  .hero-stats{gap:16px;flex-wrap:wrap}
+  .stat-num{font-size:24px}
+  .stat-label{font-size:10px}
+
+  /* SKILLS */
+  .skills-grid{grid-template-columns:1fr}
+  .sk-card{padding:18px 16px}
+  .sk-name{font-size:14px}
+
+  /* TIMELINE */
+  .timeline{padding-left:20px}
+  .tl-dot{left:-24px}
+  .tl-role{font-size:16px}
+  .tl-list li{font-size:13px}
+
+  /* FORMATIONS */
+  .form-grid{grid-template-columns:1fr}
+  .form-card{padding:18px 16px}
+
+  /* PROJET */
+  .projet-card{grid-template-columns:1fr;padding:20px 16px}
+
+  /* LANGUES & INTERETS */
+  .deux-cols{grid-template-columns:1fr !important;gap:28px}
+  .lang-card,.int-card{padding:12px 14px}
+
+  /* CONTACT */
+  .contact-grid{grid-template-columns:1fr}
+  .ct-item{padding:16px 14px}
+  .ct-value{font-size:12px}
+
+  /* OBJECTIF */
+  #objectif .wrap > div{grid-template-columns:1fr !important;gap:16px}
+
+  /* RECO CARDS */
+  .reco-card{padding:20px 16px}
+
+  /* MODALS */
+  .modal-box{
+    padding:20px 16px;
+    max-height:88vh;
+    overflow-y:auto;
+    margin:0 8px;
+    border-radius:6px;
+  }
+  .modal-title{font-size:17px}
+  .skills-modal-box{max-width:100%}
+  .skill-section{padding:12px 14px}
+  .pdf-modal-box{
+    width:100%;
+    height:80vh;
+    margin:0;
+    border-radius:6px 6px 0 0;
+    align-self:flex-end;
+  }
+  .pdf-modal-header{padding:12px 16px}
+
+  /* BTT */
+  #btt{
+    bottom:16px;right:14px;
+    width:46px;height:46px;
+    font-size:18px;
+  }
+
+  /* FOOTER */
+  .footer-text{font-size:9px;letter-spacing:1px}
+}
+
+/* SMALL PHONES 360px */
+@media(max-width:360px){
+  .hero h1{font-size:30px}
+  .hero-btns .btn-p,.hero-btns .btn-o{font-size:12px;padding:13px 16px}
+  .sec-title{font-size:20px}
+  .modal-box{padding:16px 12px}
+}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+/* CARD GLOW on hover */
+.sk-card:hover{box-shadow:0 0 20px rgba(0,255,136,0.12)}
+.form-card:hover{box-shadow:0 0 20px rgba(255,170,0,0.1)}
+.tl-item:hover .tl-dot{box-shadow:0 0 16px rgba(0,255,136,0.9);transform:scale(1.4);transition:all .3s}
+
+/* HERO TAG animate */
+.hero-tag{animation:slideInTag .6s ease forwards}
+@keyframes slideInTag{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+
+/* HERO H1 animate */
+.hero h1{animation:fadeUp .8s ease .2s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO DESC animate */
+.hero-desc{animation:fadeUp .8s ease .4s both}
+
+/* HERO BTNS animate */
+.hero-btns{animation:fadeUp .8s ease .6s both}
+
+/* NAV animate */
+nav{animation:slideDown .5s ease both}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* STAT ITEMS animate */
+.hero-stats > div{animation:fadeUp .6s ease both}
+.hero-stats > div:nth-child(1){animation-delay:.7s}
+.hero-stats > div:nth-child(2){animation-delay:.85s}
+.hero-stats > div:nth-child(3){animation-delay:1s}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--green3);border-radius:2px}
@@ -313,6 +499,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- NAV -->
 
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<canvas id="particles-canvas"></canvas>
 <nav>
   <div class="wrap">
     <div class="nav-logo">[GG]_CYBER</div>
@@ -336,7 +523,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
       <div>
         <div class="hero-tag">// Administrateur Systèmes & Réseaux</div>
         <h1><span class="first">GRIGOR</span><br><span class="last">GRIGORYAN</span></h1>
-        <p class="hero-sub">sys_admin --windows --linux --cybersecurity</p>
+        <p class="hero-sub"><span id="typingText"></span><span class="cursor-blink">█</span></p>
         <p class="hero-desc">
           Technicien Systèmes et Réseaux avec <strong style="color:var(--green)">3 ans d'expérience</strong> en administration Windows/Linux, gestion d'infrastructures réseau et support utilisateurs. Actuellement en <strong style="color:var(--cyan)">Bachelor Cybersécurité</strong> en alternance chez My Digital School.
         </p>
@@ -368,7 +555,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- OBJECTIF -->
 <section id="objectif" style="background:linear-gradient(135deg,rgba(0,255,136,0.04) 0%,rgba(0,212,255,0.04) 100%);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:56px 0">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start">
       <div style="width:64px;height:64px;border-radius:50%;background:rgba(0,255,136,0.08);border:2px solid var(--green3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0">🎯</div>
       <div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);letter-spacing:3px;margin-bottom:10px">// OBJECTIF PROFESSIONNEL</div>
@@ -390,12 +577,12 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- COMPÉTENCES -->
 <section id="competences" style="background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">compétences techniques</div>
       <h2 class="sec-title">Expertise & Outils</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="skills-grid">
+    <div class="skills-grid reveal">
       <div class="sk-card" onclick="openModal('skillsModal')">
         <div class="sk-icon">🖥️</div><div class="sk-name">Systèmes</div>
         <div class="sk-desc">Windows Server, AD, Ubuntu, Kali Linux.</div>
@@ -439,12 +626,12 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- EXPÉRIENCES -->
 <section id="experience">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">parcours professionnel</div>
       <h2 class="sec-title">Expériences</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="timeline">
+    <div class="timeline reveal">
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-date">MARS 2025 — AUJOURD'HUI</div>
@@ -490,12 +677,12 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- FORMATIONS -->
 <section id="formations" style="background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">diplômes & certifications</div>
       <h2 class="sec-title">Formations</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="form-grid">
+    <div class="form-grid reveal">
       <div class="form-card">
         <div class="form-year">2025 — 2026</div>
         <div class="form-name">Bachelor Cybersécurité & Administrateur Réseau AIS</div>
@@ -523,12 +710,12 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- PROJETS -->
 <section id="projets">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">projets techniques</div>
       <h2 class="sec-title">Lab Cybersécurité Personnel</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="projet-card">
+    <div class="projet-card reveal">
       <div>
         <p class="proj-title">🔬 Environnement de test</p>
         <ul class="proj-list">
@@ -586,39 +773,49 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- RECOMMANDATIONS -->
 <section id="recommandations" style="background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">témoignages</div>
       <h2 class="sec-title">Références & Recommandations</h2>
       <div class="sec-line"></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:24px 22px;position:relative;border-top:2px solid var(--green)">
-        <div style="font-size:32px;color:var(--green);font-family:'Share Tech Mono',monospace;line-height:1;margin-bottom:12px;opacity:0.4">"</div>
-        <p style="font-size:14px;color:var(--text2);line-height:1.8;font-style:italic;margin-bottom:16px">Grigor est un technicien sérieux, autonome et toujours disponible. Il a su gérer des incidents complexes avec calme et efficacité.</p>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,0.1);border:1px solid var(--green3);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--green);font-family:'Share Tech Mono',monospace">O</div>
+
+      <!-- CARTE ODILAN -->
+      <div class="reco-card" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:28px 24px;position:relative;border-top:3px solid var(--green);transition:transform .3s,box-shadow .3s">
+        <div style="font-size:40px;color:var(--green);font-family:'Share Tech Mono',monospace;line-height:1;margin-bottom:14px;opacity:0.3;position:absolute;top:16px;right:20px">"</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.85;font-style:italic;margin-bottom:20px;position:relative;z-index:1">"Grigor est un technicien sérieux, autonome et toujours disponible. Il a su gérer des incidents complexes avec calme et efficacité."</p>
+        <div style="display:flex;align-items:center;gap:14px;border-top:1px solid var(--border2);padding-top:16px">
+          <div style="width:42px;height:42px;border-radius:50%;background:rgba(0,255,136,0.1);border:2px solid var(--green3);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--green);font-family:'Share Tech Mono',monospace;flex-shrink:0">O</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">Responsable Technique</div>
-            <div style="font-size:11px;color:var(--cyan);letter-spacing:1px">ODILAN</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text)">Responsable Technique</div>
+            <div style="font-size:11px;color:var(--green);letter-spacing:1px;font-family:'Share Tech Mono',monospace">ODILAN</div>
           </div>
         </div>
       </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:24px 22px;position:relative;border-top:2px solid var(--cyan)">
-        <div style="font-size:32px;color:var(--cyan);font-family:'Share Tech Mono',monospace;line-height:1;margin-bottom:12px;opacity:0.4">"</div>
-        <p style="font-size:14px;color:var(--text2);line-height:1.8;font-style:italic;margin-bottom:16px">Excellent sens du service, compétences réseau solides et grande capacité d'adaptation. Un atout pour n'importe quelle équipe IT.</p>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--cyan);font-family:'Share Tech Mono',monospace">W</div>
+
+      <!-- CARTE WALPI -->
+      <div class="reco-card" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:28px 24px;position:relative;border-top:3px solid var(--cyan);transition:transform .3s,box-shadow .3s">
+        <div style="font-size:40px;color:var(--cyan);font-family:'Share Tech Mono',monospace;line-height:1;margin-bottom:14px;opacity:0.3;position:absolute;top:16px;right:20px">"</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.85;font-style:italic;margin-bottom:20px;position:relative;z-index:1">"Excellent sens du service, compétences réseau solides et grande capacité d'adaptation. Un atout pour n'importe quelle équipe IT."</p>
+        <div style="display:flex;align-items:center;gap:14px;border-top:1px solid var(--border2);padding-top:16px">
+          <div style="width:42px;height:42px;border-radius:50%;background:rgba(0,212,255,0.1);border:2px solid rgba(0,212,255,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--cyan);font-family:'Share Tech Mono',monospace;flex-shrink:0">W</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">Directeur IT</div>
-            <div style="font-size:11px;color:var(--cyan);letter-spacing:1px">WALPI</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text)">Directeur IT</div>
+            <div style="font-size:11px;color:var(--cyan);letter-spacing:1px;font-family:'Share Tech Mono',monospace">WALPI</div>
           </div>
         </div>
       </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:24px 22px;position:relative;border-top:2px solid var(--amber);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px">
-        <div style="font-size:28px">✉️</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.7">Vous avez travaillé avec moi ? Je serais ravi d'ajouter votre recommandation.</p>
-        <button onclick="openModal('recoModal')" style="font-family:'Share Tech Mono',monospace;font-size:11px;padding:8px 16px;background:rgba(255,170,0,0.08);border:1px solid var(--amber);color:var(--amber);border-radius:2px;cursor:pointer;transition:all .2s">Laisser une recommandation</button>
+
+      <!-- CARTE FORMULAIRE -->
+      <div class="reco-card" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:28px 24px;border-top:3px solid var(--amber);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;transition:transform .3s,box-shadow .3s">
+        <div style="font-size:36px">✉️</div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px">Vous avez travaillé avec moi ?</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.7">Laissez votre recommandation,<br>elle sera ajoutée ici !</p>
+        </div>
+        <button onclick="openModal('recoModal')" style="font-family:'Share Tech Mono',monospace;font-size:12px;padding:12px 24px;background:rgba(255,170,0,0.1);border:1px solid var(--amber);color:var(--amber);border-radius:2px;cursor:pointer;transition:all .25s;letter-spacing:1px;width:100%;max-width:220px">+ Recommandation</button>
       </div>
+
     </div>
     <p style="margin-top:16px;font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace">// Références disponibles sur demande</p>
   </div>
@@ -627,7 +824,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
 <!-- CONTACT -->
 <section id="contact">
   <div class="wrap">
-    <div class="sec-header">
+    <div class="sec-header reveal">
       <div class="sec-tag">me joindre</div>
       <h2 class="sec-title">Contact</h2>
       <div class="sec-line"></div>
@@ -821,6 +1018,119 @@ function envoyerReco(){
     }, 400);
   }, 2500);
 }
+</script>
+
+
+<script>
+// ── TYPING EFFECT ──
+(function(){
+  const texts = [
+    'sys_admin --windows --linux',
+    'cybersecurity --kali --nmap',
+    'network --vlan --vpn --firewall',
+    'bachelor_cyber --alternance'
+  ];
+  let ti=0, ci=0, deleting=false;
+  const el=document.getElementById('typingText');
+  if(!el) return;
+  function type(){
+    const current=texts[ti];
+    if(!deleting){
+      el.textContent=current.slice(0,ci+1);
+      ci++;
+      if(ci===current.length){
+        deleting=true;
+        setTimeout(type,1800);
+        return;
+      }
+    } else {
+      el.textContent=current.slice(0,ci-1);
+      ci--;
+      if(ci===0){
+        deleting=false;
+        ti=(ti+1)%texts.length;
+      }
+    }
+    setTimeout(type, deleting?40:70);
+  }
+  setTimeout(type,600);
+})();
+
+// ── PARTICLES (réseau/matrix style) ──
+(function(){
+  const canvas=document.getElementById('particles-canvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  let W,H,nodes=[];
+  const MAX=65, CONNECT_DIST=140;
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  for(let i=0;i<MAX;i++){
+    nodes.push({
+      x:Math.random()*window.innerWidth,
+      y:Math.random()*window.innerHeight,
+      vx:(Math.random()-.5)*0.4,
+      vy:(Math.random()-.5)*0.4,
+      r:Math.random()*2+1
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // draw lines
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x;
+        const dy=nodes[i].y-nodes[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<CONNECT_DIST){
+          const alpha=1-(dist/CONNECT_DIST);
+          ctx.strokeStyle=`rgba(0,255,136,${alpha*0.35})`;
+          ctx.lineWidth=0.7;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    // draw dots
+    nodes.forEach(n=>{
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,255,136,0.6)';
+      ctx.fill();
+      // move
+      n.x+=n.vx;
+      n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+
+<script>
+// SCROLL REVEAL
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1});
+revealEls.forEach(el => revealObs.observe(el));
 </script>
 
 </body>
